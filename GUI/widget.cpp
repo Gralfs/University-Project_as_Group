@@ -1,6 +1,7 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
@@ -53,3 +54,14 @@ void Widget::on_checkBox_stateChanged(int arg1)     //Set button colors when man
 }
 
 //Slidersetup still missing
+
+void Widget::on_verticalSlider_sliderMoved(int state)        //state of slider
+{
+    int posi = state +1;
+    QString pos = QString::number(posi);
+    ui->label_2->setText(pos);
+/*    int position = 75;
+    QString posit = QString::number(position);
+    ui->label->setText(posit);
+    ui->progressBar->setValue(position);*/
+}
