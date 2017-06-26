@@ -1,5 +1,8 @@
 int eingang = A1;
 int foto_sensor = 0; 
+int Fotowerte [5];
+int i;
+
 
 void setup()
 {
@@ -10,3 +13,8 @@ Serial.begin(9600);
 void loop()
 {
 foto_sensor =analogRead(eingang);
+
+
+Serial.print("Sensorwert = " ); 
+Serial.println(foto_sensor);
+
