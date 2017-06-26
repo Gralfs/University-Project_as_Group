@@ -10,7 +10,14 @@ Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-temp_sensor=analogRead(TMP36) //Auslesen des temp_sensor an Pin
+// put your main code here, to run repeatedly:
   
+  
+temp_sensor = analogRead(TMP36); //Auslesen des temp_sensor an Pin
+temp_celsius = map(sensorwert, 0, 410, -50, 150); //Umwandeln in Grad Celsius
+  
+  
+  
+  
+  delay(t);
 }
