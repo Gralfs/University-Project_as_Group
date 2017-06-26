@@ -1,0 +1,12 @@
+int eingang = A1;
+int foto_sensor = 0; 
+
+void setup()
+{
+Serial.begin(9600); 
+
+}
+
+void loop()
+{
+foto_sensor =analogRead(eingang);
