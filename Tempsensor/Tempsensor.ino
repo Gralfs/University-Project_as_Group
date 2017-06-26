@@ -6,7 +6,7 @@ int t = 1000; //Zeitspanne zwischen Temperaturabfragen;
 
 void setup() {
   // put your setup code here, to run once:
-Serial.begin(9600);
+Serial.begin(9600); //Übertragung Serielle Schnittstelle
 }
 
 void loop() {
@@ -16,8 +16,9 @@ void loop() {
 temp_sensor = analogRead(TMP36); //Auslesen des temp_sensor an Pin
 temp_celsius = map(sensorwert, 0, 410, -50, 150); //Umwandeln in Grad Celsius
   
-  
-  
+
+Serial.print(temp_celsius); 
+Serial.println(" Grad Celsius");
   
   delay(t);
 }
