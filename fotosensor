@@ -27,3 +27,8 @@ Serial.println(foto_sensor);
    
    delay(t);
 }
+
+
+
+
+}
