@@ -1,5 +1,7 @@
 int TMP36 = A0; //Pinbelegung Sensor, wird noch angepast
-int temp_sensor;
+int temp_sensor; //Intwerte zwischen 0 bis 410
+int temp_celsius = 0; //Umgerechnete Temperatur
+int t = 1000; //Zeitspanne zwischen Temperaturabfragen;
 
 
 void setup() {
