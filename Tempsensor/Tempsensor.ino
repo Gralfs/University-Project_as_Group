@@ -14,7 +14,7 @@ void loop() {
   
   
 temp_sensor = analogRead(TMP36); //Auslesen des temp_sensor an Pin
-temp_celsius = map(sensorwert, 0, 410, -50, 150); //Umwandeln in Grad Celsius
+temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
   
 
 Serial.print(temp_celsius); 
