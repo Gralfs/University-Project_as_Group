@@ -3,6 +3,8 @@ int foto_sensor = 0;
 int Fotowerte [5];
 int i;
 int t=500;
+bool runter_licht=false;
+int lichtstaerke = 510; //Anpassen
 
 void setup()
 {
@@ -24,8 +26,11 @@ Serial.print("Sensorwert = " );
 Serial.println(foto_sensor);
    
    Fotowerte[i] = foto_sensor;
+  
    
    delay(t);
+   }
+   
 }
 
 
