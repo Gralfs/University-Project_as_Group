@@ -1,5 +1,9 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
+#include <string>
+#include <QDebug>
 
 
 Widget::Widget(QWidget *parent) :
@@ -7,12 +11,60 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    arduino = new QSerialPort(this);
+    bool arduino_is_available = false;
+    QString arduino_uno_port_name;
+    foreach(const QSerialPortInfo &serialPortInfo, QSerialPortInfo::availablePorts()){
+        if((serialPortInfo.hasProductIdentifier() == arduino_uno_product_id)
+            && (serialPortInfo.vendorIdentifier() == arduino_uno_vendor_id)){
+            arduino_is_available = true;
+            arduino_uno_port_name = serialPortInfo.portName();
+        }
+    }
+    if(arduino_is_available){
+        qDebug() << "Found the Arduino port...\n";
+        arduino->setPortName(arduino_uno_port_name);
+        arduino->open(QSerialPort::ReadOnly);
+        arduino->setBaudRate(QSerialPort::Baud9600);
+        arduino->setDataBits(QSerialPort::Data8);
+        arduino->setFlowControl(QSerialPort::NoFlowControl);
+        arduino->setParity(QSerialPort::NoParity);
+        arduino->setStopBits(QSerialPort::OneStop);
+        QObject::connect(arduino, SIGNAL(readyRead()), this, SLOT(readSerial()));
+    }else{
+        qDebug() << "Couldn't find the Arduino\n";
+    }
 }
 
 Widget::~Widget()
 {
+    if(arduino->isOpen()){
+        arduino->close();
+    }
     delete ui;
 }
+
+void Widget::readSerial()
+{
+    QString serialBuffer = "";
+    QString temperature_value = "0";
+    QString serialData = "";
+    qDebug() << "Serialport works";
+    QStringList buffer_split = serialBuffer.split(",");
+    if(buffer_split.length()<3){
+        serialData = arduino->readAll();
+        serialBuffer = serialBuffer + QString::fromStdString(serialData.toStdString());
+        serialData.clear();
+    }
+    else{
+        serialBuffer = "";
+        qDebug() << buffer_split<<"\n";
+        temperature_value = buffer_split[1];
+        ui->label_3->setText(temperature_value);
+    }
+
+}
+
 /*
 void Widget::on_pushButton_2_clicked()   //Emergency stop
 {
@@ -21,10 +73,10 @@ void Widget::on_pushButton_5_clicked()   //Shutdown the whole programm (maybe wa
 {
 }*/
 
-void Widget::on_checkBox_stateChanged(int arg1)     //Set button colors when manuel mode is activated
+void Widget::on_checkBox_stateChanged(int arg1)
 {
 
-    if (arg1 == 2){
+    if (arg1 == 2){     //Set button colors when manuel mode is activated
         setStyleSheet("QPushButton#pushButton_2 { background-color: red; }\n"
                       "QPushButton#pushButton_5 { background-color: grey; }\n"
                       "QPushButton#pushButton_3 { background-color: yellow; }\n"
@@ -48,13 +100,6 @@ void Widget::on_checkBox_stateChanged(int arg1)     //Set button colors when man
 
 }
 
-void Widget::on_verticalSlider_sliderMoved(int state)        //state of slider
-{
-    int posi = state +1;
-    QString pos = QString::number(posi);
-    ui->label_2->setText(pos);
-}
-
 void Widget::on_pushButton_3_clicked()   //Fully open blinds
 {
     ui->verticalSlider->setValue(0);
@@ -66,3 +111,17 @@ void Widget::on_pushButton_4_clicked()   //Fully close blinds
     ui->verticalSlider->setValue(99);
     ui->label_2->setText("100");
 }
+
+void Widget::on_verticalSlider_sliderReleased()     //writting of sliderposition when released into text file
+{
+    int state = ui->verticalSlider->value();
+    state = state + 1;
+}
+
+void Widget::on_verticalSlider_valueChanged(int state)      //Display of Sliderposition on label
+{
+    int posi = state +1;
+    QString pos = QString::number(posi);
+    ui->label_2->setText(pos);
+}
+
