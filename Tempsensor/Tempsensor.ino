@@ -2,9 +2,9 @@
 #include <EEPROM.h>
 
 
-int TMP36 = A8; //Pinbelegung Sensor, wird noch angepast
-int temp_sensor; //Intwerte zwischen 0 bis 410
-int temp_celsius = 0; //Umgerechnete Temperatur
+double TMP36 = A8; //Pinbelegung Sensor, wird noch angepast
+double temp_sensor; //Intwerte zwischen 0 bis 410
+double temp_celsius = 0; //Umgerechnete Temperatur
 int t = 1000; //Zeitspanne zwischen Temperaturabfragen;
 int i;
 int Werte [60];
@@ -28,8 +28,7 @@ for (i=0; i<60; i++){
    
     temp_sensor = analogRead(TMP36); //Auslesen des temp_sensor an Pin
     temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
-         Serial.print(temp_celsius); 
-         Serial.println(" Grad Celsius");
+    
     delay(t);
 
 
@@ -43,7 +42,8 @@ for (i=0; i<60; i++){
 
 mittelwert=sum/60;
 
-  EEPROM.write(j, mittelwert); 
+   Serial.print(mittelwert); 
+         Serial.println(",");
    
 }
 if (temp_sensor>100){
