@@ -4,6 +4,14 @@ int temp;
 int licht;
 temp = mittelwert_t; //optional: neuer Variablenname
 licht = mittelwert_f; //optional: neuer Variablenname
+
+void saveE(int tempAnf, int lichtAnf,int temp,int licht);//Funktionsprototypen
+void Vergleichsfkt(double temp, double licht);
+int go_down ();
+int go_up ();
+
+
+
 void setup ()
 
 void loop() 
