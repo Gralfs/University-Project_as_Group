@@ -1,23 +1,22 @@
 //Temperatur
-int TMP36 = A8; //Pinbelegung Sensor, wird noch angepast
+int TMP36 = A8; //Pinbelegung Temperatursensor
 int temp_sensor; //Intwerte zwischen 0 bis 410
 int temp_celsius = 0; //Umgerechnete Temperatur
-int t = 1000; //Zeitspanne zwischen Temperaturabfragen;
-int i;
+int t = 1000; //Zeitspanne zwischen Wertabfragen;
 int Temperaturwerte [60];
 int mittelwert_t;
-int j;
 int sum_t; //Temperaturen addiert pro Minute
 
-//Licht
+int i;
 
-int eingang = A1;
+//Licht
+int eingang = A1; //Pinbelegung Lichtsensor
 int foto_sensor ; 
 int Fotowerte [60];
-int sum_f;
-int mittelwert_f;
+int sum_f;  //Lichtwerte addiert pro Minute
+int mittelwert_f; 
 
-
+int j;
 
 
 void setup() {
@@ -53,15 +52,17 @@ for (i=0; i<60; i++){
 
       Temperaturwerte[i] = temp_celsius;
       Fotowerte[i] = foto_sensor;
-      
-  sum_t=sum_t+Temperaturwerte[i];
+     
+      //Addieren der Werte
+  sum_t=sum_t+Temperaturwerte[i]; 
   sum_f=sum_f+Fotowerte[i];
   
   }
+  //Mittelwertberechnung
 mittelwert_t=sum_t/60;
 mittelwert_f=sum_f/60;
 
-
+//Ausgabe
  Serial.print("Temperatur:"); 
    Serial.print(mittelwert_t); 
          Serial.println(",");
