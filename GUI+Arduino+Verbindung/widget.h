@@ -10,14 +10,21 @@
 using namespace std;
 
 namespace Ui {
-class Widget;
+    class Widget;
+    struct SerialInput;
 }
+
+struct SerialInput {
+    QString licht;
+    QString temp;
+};
 
 class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
+    static bool parseSerialInput(QString inputString, SerialInput* result);
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 

@@ -61,24 +61,45 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::readSerial()                                       //Reading data from serialport
+// parse serial input
+bool Widget::parseSerialInput(QString inputString, SerialInput* result) {
+    // check, whether there is any input
+    QStringList bufferSplit = inputString.split('|');
+
+    // return false when there is no data
+    if (bufferSplit.length() < 2) {
+        return false;
+    }
+
+    // parse light
+    result->licht = bufferSplit.at(0);
+    result->licht = result->licht.remove(0, result->licht.indexOf(",") + 1);
+
+    // parse temp
+    result->temp = bufferSplit.at(0);
+    result->temp = result->temp.remove(result->temp.indexOf(","), 100);
+
+    return true;
+}
+
+// read data from the serial port
+void Widget::readSerial()
 {
-    //qDebug()<<serialBuffer;                                     //To test what the data on the serialport looks like
-    QStringList bufferSplit = serialBuffer.split("|");
-    if(bufferSplit.length()<2){
+    // this will hold the parsed result.
+    SerialInput result;
+
+    if (Widget::parseSerialInput(serialBuffer, &result)) {
+        // update ui with new data
+        ui->label_3->setText(result.licht);
+        ui->label_6->setText(result.temp);
+
+        // reset serial buffer
+        serialBuffer = "";
+        serialData.clear();
+    } else {
+        // update data
         serialData = arduino->readAll();
         serialBuffer += QString::fromStdString(serialData.toStdString());
-    }else{
-        qDebug() << bufferSplit;
-        serialBuffer = "";
-        QString licht = bufferSplit.at(0);                      //String for brightness
-        QString temp = bufferSplit.at(0);                       //String for temperatur
-        licht = licht.remove(0,licht.indexOf(",")+1);           //Shorten the string to only include the brightness
-        temp = temp.remove(temp.indexOf(","), 100);             //Shorten the string to only include the temperatur
-        ui->label_3->setText(licht);                            //Setting labels to the sensordata
-        ui->label_6->setText(temp);
-        serialData.clear();
-                                                                //Missing the position of shutters to set the statusbar
     }
 }
 
