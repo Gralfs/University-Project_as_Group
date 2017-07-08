@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += serialport
+QT += charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,6 +32,4 @@ HEADERS  += widget.h
 
 FORMS    += widget.ui
 
-DISTFILES += \
-    Rollo.txt \
-    RolloStatus.txt
+
