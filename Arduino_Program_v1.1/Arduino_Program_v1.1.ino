@@ -77,20 +77,20 @@ int initialise () {                 //Hier wird das Rollo intialisiert
   Rollo.SetStepsWindow (StepsFenster); //die nötigen steps um ganz nach unten zufahren wird in der Klasse gespeichert
 }
 
-void setup() {
-  Arduino Rollo;
+void setup() {       //Setup beim starten vom Arduino
+  Arduino Rollo;      //Klassen definition 
   stepper.setRpm (10); // Drehzahl hier einstellen (6 RPM -22 RPM) Drehzahl gegen Drehmoment
-  Serial.begin(9600);
-  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);   //Serial baud rate wird hier bestimmt 
+  pinMode(4, INPUT_PULLUP);   //Die beiden kontakte für Rollo ganz offen und ganz zu, werden hier definiert 
   pinMode(3, INPUT_PULLUP);
-  initialise ();
-  Serial.print("Setup");
+  initialise (); //Hier wird das Rollo intialisiert
+  //Serial.print("Setup"); //Serial ausgabe für Debugging, das man weiß wo sich das Programm gerade befindet
 }
 
-void loop() {
-    if (Serial.available() > 0){
+void loop() {                  //Loop schleife, hier wird das Rollo gesteuert und die Sensorwerte ausgegeben
+    if (Serial.available() > 0){   //Wenn ein Serial zugang da ist wird integer location desen wert gleich gesätzt
     int location = Serial.read();
-    rollo(location);}
+    rollo(location);}//Die funktion rollo kriegt dann den Wert vom Serial
     int temp_sensor = analogRead(A8); //Auslesen des temp_sensor an Pin
     int temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
     int foto_sensor =analogRead(A1);
