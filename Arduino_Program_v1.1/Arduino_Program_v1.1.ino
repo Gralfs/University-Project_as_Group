@@ -51,16 +51,16 @@ int Arduino::getPosition100(void)
   return Position100;
 }
 
-boolean runter = true;
-void rollo (int location); 
-Arduino Rollo;
+boolean runter = true;         //Boolean variable das der Steppermotor weiß ob er runter oder hoch fahren muss
+void rollo (int location);     //Funktiondefinition für das ändern der Rollo position
+Arduino Rollo;                  //Rollo als Arduino definiert 
 
-int initialise () {
-  while (digitalRead(4)!=LOW)
+int initialise () {                 //Hier wird das Rollo intialisiert 
+  while (digitalRead(4)!=LOW)       //Das Rollo fährt einmal bis ganz nach Unten bis er zum unterem Kontakt kommt
     {
-      runter = true;
-      stepper.step(runter);
-      Serial.print("While loop");
+      runter = true;                //wenn runter=true fährt das Rollo runter
+      stepper.step(runter);           //Steppermotor befehl das er unendlich lange runter fährt
+      //Serial.print("While loop");     //Ausgabe while loop für debugging. Das man weiß wo sich der Arduino gerade befindet
   }
   int StepsFenster=0;
   for (StepsFenster; digitalRead(3)==HIGH;StepsFenster++) 
