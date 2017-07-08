@@ -7,8 +7,8 @@ class Arduino
 {
   private:
   int StepsFenster;       // Speicher für steps zwischen Rollo zu und offen. NICHT 0-100 bereich! 
-  int PositionInSteps;
-  int Position100;
+  int PositionInSteps;    //Position vom Rollo in Steps
+  int Position100;        //Position vom Rollo von 0 bis 100
 
   public:
   void SetStepsWindow (int value);      //Methoden
@@ -126,7 +126,7 @@ void rollo (int location){
   if (locationinsteps>pos)
   {
     runter = true;
-    stepper.newMove (runter, locationinsteps);
+    stepper.moveTo (runter, locationinsteps);
     int nStep = stepper.getStepsLeft();
     nStep=nStep/Rollo.getStepsFenster();
     while(stepper.getStepsLeft() != 0)
@@ -142,7 +142,7 @@ void rollo (int location){
   else if (locationinsteps<pos)
   {
     runter = false;
-    stepper.newMove (runter, locationinsteps);
+    stepper.moveTo (runter, locationinsteps);
         int nStep = stepper.getStepsLeft();
     nStep=nStep/Rollo.getStepsFenster();
     while(stepper.getStepsLeft() != 0)
