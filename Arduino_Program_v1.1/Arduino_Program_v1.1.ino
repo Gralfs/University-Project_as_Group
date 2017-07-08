@@ -62,20 +62,19 @@ int initialise () {                 //Hier wird das Rollo intialisiert
       stepper.step(runter);           //Steppermotor befehl das er unendlich lange runter fährt
       //Serial.print("While loop");     //Ausgabe while loop für debugging. Das man weiß wo sich der Arduino gerade befindet
   }
-  int StepsFenster=0;
-  for (StepsFenster; digitalRead(3)==HIGH;StepsFenster++) 
+  int StepsFenster=0;                   //definition das die steps zwischen ganz unten und ganz oben gespeichert werden kann
+  for (StepsFenster; digitalRead(3)==HIGH;StepsFenster++)    //Jetzt fährt das Rollo ganz nach Oben und zählt dabei die notwendigen Schritte
     {
-      runter = false;
-      stepper.step(runter);
-      Serial.print(StepsFenster);
-      Serial.print("\n");
-      Rollo.SetStepsWindow (StepsFenster); 
+      runter = false;    //jetztz ist runter=false also fährt das Rollo nach oben 
+      stepper.step(runter);   //Das Rollo fährt so unendlich nach Oben
+      //Serial.print(StepsFenster);    //Serial print für das Debugging
+      //Serial.print("\n");
   }
-   Serial.print("TOTAL:");  
-  Serial.print(StepsFenster);
-  Serial.print("\n");
-  Rollo.SetStepsWindow (0);
-  Rollo.SetStepsWindow (StepsFenster);
+  //Serial.print("TOTAL:");  //Weitere serial prints für das Debugging
+  //Serial.print(StepsFenster);
+  //Serial.print("\n");
+  Rollo.SetPositionInSteps (0); //Jetzt wo wir wissen das das Rollo ganz oben ist können wir die Position definieren
+  Rollo.SetStepsWindow (StepsFenster); //die nötigen steps um ganz nach unten zufahren wird in der Klasse gespeichert
 }
 
 void setup() {
