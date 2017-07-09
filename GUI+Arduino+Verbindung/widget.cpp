@@ -47,6 +47,7 @@ Widget::Widget(QWidget *parent) :
         arduino->setParity(QSerialPort::NoParity);
         arduino->setStopBits(QSerialPort::OneStop);
         QObject::connect(arduino, SIGNAL(readyRead()), this, SLOT(readSerial()));
+        arduino->clear();
         qDebug() << arduino->isOpen()<<endl;
     }else{
         qDebug() << "Couldn't find the Arduino\n";
@@ -61,45 +62,15 @@ Widget::~Widget()
     delete ui;
 }
 
-// parse serial input
-bool Widget::parseSerialInput(QString inputString, SerialInput* result) {
-    // check, whether there is any input
-    QStringList bufferSplit = inputString.split('|');
-
-    // return false when there is no data
-    if (bufferSplit.length() < 2) {
-        return false;
-    }
-
-    // parse light
-    result->licht = bufferSplit.at(0);
-    //result->licht = result->licht.remove(0, result->licht.indexOf(",") + 1);
-
-    // parse temp
-    result->temp = bufferSplit.at(1);
-    //result->temp = result->temp.remove(result->temp.indexOf(","), 100);
-
-    return true;
-}
-
 // read data from the serial port
 void Widget::readSerial()
 {
-    // this will hold the parsed result.
-    SerialInput result;
+    this->parser.addInputString(this->arduino->readAll());
 
-    if (Widget::parseSerialInput(serialBuffer, &result)) {
-        // update ui with new data
-        ui->label_3->setText(result.licht);
-        ui->label_6->setText(result.temp);
-
-        // reset serial buffer
-        serialBuffer = "";
-        serialData.clear();
-    } else {
-        // update data
-        serialData = arduino->readAll();
-        serialBuffer += QString::fromStdString(serialData.toStdString());
+    if (this->parser.getData().length() > 0) {
+        SerialInput lastBlock = this->parser.getData().last();
+        ui->label_3->setText(lastBlock.licht);
+        ui->label_6->setText(lastBlock.temp);
     }
 }
 

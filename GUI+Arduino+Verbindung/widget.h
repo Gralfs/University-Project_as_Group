@@ -6,25 +6,21 @@
 #include <QByteArray>
 #include <QtCharts/QtCharts>
 
+#include "serialinputparser.h"
+
 
 using namespace std;
 
 namespace Ui {
     class Widget;
-    struct SerialInput;
 }
 
-struct SerialInput {
-    QString licht;
-    QString temp;
-};
 
 class Widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    static bool parseSerialInput(QString inputString, SerialInput* result);
     explicit Widget(QWidget *parent = 0);
     ~Widget();
 
@@ -50,6 +46,7 @@ private:
     QByteArray serialData;
     QString serialBuffer;
     QString parsed_data;
+    SerialInputParser parser;
 
 };
 

@@ -26,11 +26,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    serialinputparser.cpp
 
 HEADERS  += widget.h \
     testdefinition.h \
-    test.h
+    test.h \
+    serialinputparser.h
 
 FORMS    += widget.ui
 

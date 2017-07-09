@@ -2,7 +2,7 @@
 #define TESTDEFINITIONEN_H
 
 #include "test.h"
-#include "widget.h"
+#include "serialinputparser.h"
 
 #ifdef TEST
 
@@ -10,21 +10,23 @@
 void testValidSerialInput() {
   bool testResult = true;
 
-  SerialInput parsedResult;
-  bool result = Widget::parseSerialInput("658|23", &parsedResult);
+  SerialInputParser parser;
+  parser.addInputString("658,23|");
 
-  if (result == false) {
-    APITest::printComment("Das Ergebnis sollte 'true' sein.");
+  QList<SerialInput> data = parser.getData();
+
+  if (data.length() != 1) {
+    APITest::printComment("Es sollte ein kompletter Block gefunden worden sein, stattdessen: " + QString(data.length()));
     testResult = false;
   }
 
-  if (parsedResult.licht != "658") {
-    APITest::printComment("Der Lichtwert sollte '658' sein, stattdessen: " + parsedResult.licht);
+  if (data.at(0).licht != "658") {
+    APITest::printComment("Der Lichtwert sollte '658' sein, stattdessen: " + data.at(0).licht);
     testResult = false;
   }
 
-  if (parsedResult.temp != "23") {
-    APITest::printComment("Der Temperaturwert sollte '23' sein, stattdessen: " + parsedResult.temp);
+  if (data.at(0).temp != "23") {
+    APITest::printComment("Der Temperaturwert sollte '23' sein, stattdessen: " + data.at(0).temp);
     testResult = false;
   }
 
@@ -39,11 +41,13 @@ void testValidSerialInput() {
 void testInvalidSerialInput() {
     bool testResult = true;
 
-    SerialInput parsedResult;
-    bool result = Widget::parseSerialInput("nicht ausreichend", &parsedResult);
+    SerialInputParser parser;
+    parser.addInputString("658,23");
 
-    if (result == true) {
-      APITest::printComment("Das Ergebnis sollte 'false' sein.");
+    QList<SerialInput> data = parser.getData();
+
+    if (data.length() != 0) {
+      APITest::printComment("Es sollte kein vollständiger Block gefunden worden sein, stattdessen: " + QString(data.length()));
       testResult = false;
     }
 
