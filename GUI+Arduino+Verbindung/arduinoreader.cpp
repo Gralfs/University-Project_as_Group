@@ -46,7 +46,7 @@ void ArduinoReader::readSerial()
     bool result = this->parser.addInputString(this->arduino->readAll());
 
     if (result) {
-        emit newBlock(this->parser.getData().last());
+        emit newBlock(this->parser.getData()->last());
     }
 }
 

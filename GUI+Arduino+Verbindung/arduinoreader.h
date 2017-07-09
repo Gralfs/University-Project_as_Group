@@ -16,6 +16,8 @@ public:
     explicit ArduinoReader(QObject *parent = 0);
     ~ArduinoReader();
 
+    QList<SerialInput>* getData() { return this->parser.getData(); }
+
 signals:
     void newBlock(SerialInput newBlock);
 

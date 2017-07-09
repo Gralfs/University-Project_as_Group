@@ -28,13 +28,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         widget.cpp \
     serialinputparser.cpp \
-    arduinoreader.cpp
+    arduinoreader.cpp \
+    graph.cpp
 
 HEADERS  += widget.h \
     testdefinition.h \
     test.h \
     serialinputparser.h \
-    arduinoreader.h
+    arduinoreader.h \
+    graph.h
 
 FORMS    += widget.ui
 

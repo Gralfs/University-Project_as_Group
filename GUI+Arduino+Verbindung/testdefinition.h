@@ -13,20 +13,20 @@ void testValidSerialInput() {
   SerialInputParser parser;
   parser.addInputString("658,23|");
 
-  QList<SerialInput> data = parser.getData();
+  QList<SerialInput>* data = parser.getData();
 
-  if (data.length() != 1) {
-    APITest::printComment("Es sollte ein kompletter Block gefunden worden sein, stattdessen: " + QString(data.length()));
+  if (data->length() != 1) {
+    APITest::printComment("Es sollte ein kompletter Block gefunden worden sein, stattdessen: " + QString(data->length()));
     testResult = false;
   }
 
-  if (data.at(0).licht != "658") {
-    APITest::printComment("Der Lichtwert sollte '658' sein, stattdessen: " + data.at(0).licht);
+  if (data->at(0).licht != "658") {
+    APITest::printComment("Der Lichtwert sollte '658' sein, stattdessen: " + data->at(0).licht);
     testResult = false;
   }
 
-  if (data.at(0).temp != "23") {
-    APITest::printComment("Der Temperaturwert sollte '23' sein, stattdessen: " + data.at(0).temp);
+  if (data->at(0).temp != "23") {
+    APITest::printComment("Der Temperaturwert sollte '23' sein, stattdessen: " + data->at(0).temp);
     testResult = false;
   }
 
@@ -44,10 +44,10 @@ void testInvalidSerialInput() {
     SerialInputParser parser;
     parser.addInputString("658,23");
 
-    QList<SerialInput> data = parser.getData();
+    QList<SerialInput>* data = parser.getData();
 
-    if (data.length() != 0) {
-      APITest::printComment("Es sollte kein vollständiger Block gefunden worden sein, stattdessen: " + QString(data.length()));
+    if (data->length() != 0) {
+      APITest::printComment("Es sollte kein vollständiger Block gefunden worden sein, stattdessen: " + QString(data->length()));
       testResult = false;
     }
 
