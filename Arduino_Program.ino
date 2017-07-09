@@ -89,18 +89,18 @@ void loop() {
     int temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
     int foto_sensor =analogRead(A1);
     int foto_base100
-    Serial.print(101);
-    Serial.print(",");
+//    Serial.print(101);
+//    Serial.print(",");
     Serial.print(temp_celsius);
-    Serial.print(",");
-    Serial.print(102);
-    Serial.print(",");
+    Serial.print("|");
+//    Serial.print(102);
+//    Serial.print(",");
     Serial.print(foto_base100);
-    Serial.print(",");
+ /*   Serial.print(",");
     Serial.print(103);
     Serial.print(",");
     Serial.print(Rollo.getPosition100);
-    Serial.print(666);
+    Serial.print(666);*/
   }
 }
 
