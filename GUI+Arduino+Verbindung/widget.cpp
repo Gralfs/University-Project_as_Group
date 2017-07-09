@@ -73,11 +73,11 @@ bool Widget::parseSerialInput(QString inputString, SerialInput* result) {
 
     // parse light
     result->licht = bufferSplit.at(0);
-    result->licht = result->licht.remove(0, result->licht.indexOf(",") + 1);
+    //result->licht = result->licht.remove(0, result->licht.indexOf(",") + 1);
 
     // parse temp
-    result->temp = bufferSplit.at(0);
-    result->temp = result->temp.remove(result->temp.indexOf(","), 100);
+    result->temp = bufferSplit.at(1);
+    //result->temp = result->temp.remove(result->temp.indexOf(","), 100);
 
     return true;
 }
