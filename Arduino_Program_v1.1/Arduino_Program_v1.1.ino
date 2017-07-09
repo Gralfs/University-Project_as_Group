@@ -109,15 +109,15 @@ void setup() {       //Setup beim starten vom Arduino
 }
 
 void loop() {                  //Loop schleife, hier wird das Rollo gesteuert und die Sensorwerte ausgegeben
-  if (Serial.available() > 0) {   //Wenn ein Serial zugang da ist wird integer location desen wert gleich gesätzt
+  if (100 <= Serial.available() >= 0) {   //Wenn ein Serial zugang da ist wird integer location desen wert gleich gesätzt
     int location = Serial.read();
     rollo(location);
-  }//Die funktion rollo kriegt dann den Wert vom Serial
+ }//Die funktion rollo kriegt dann den Wert vom Serial
 
   int temp_sensor = analogRead(A8); //Auslesen des temp_sensor an Pin
-  int temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
+  int temp_celsius = map(temp_sensor, 0, 100, -50, 150); //Umwandeln in Grad Celsius
   int foto_sensor =analogRead(A1);
-  int foto_base100= map(foto_sensor, 0, 410, -50, 150);
+  int foto_base100= map(foto_sensor, 0, 100, 0, 1500);
 
   Serial.write(getSerialOutput(foto_base100, temp_celsius).c_str());
   
