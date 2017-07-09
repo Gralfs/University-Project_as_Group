@@ -89,13 +89,18 @@ void setup() {       //Setup beim starten vom Arduino
 
 void loop() {                  //Loop schleife, hier wird das Rollo gesteuert und die Sensorwerte ausgegeben
     if (Serial.available() > 0){   //Wenn ein Serial zugang da ist wird integer location desen wert gleich gesätzt
+    if(0 <= Serial.read() <= 100) {     //If loop das das Rollo nicht sich kaputt fährt
     int location = Serial.read();
     rollo(location);}//Die funktion rollo kriegt dann den Wert vom Serial
+    else 
+    {Serial.print("invalid position");
+    }
+    }
     int temp_sensor = analogRead(A8); //Auslesen des temp_sensor an Pin
     int temp_celsius = map(temp_sensor, 0, 410, -50, 150); //Umwandeln in Grad Celsius
     int foto_sensor =analogRead(A1);
     int foto_base100= map(foto_sensor, 0, 410, -50, 150);
-    Serial.print(101);
+    Serial.print(101);        //Sensorwerte werden auf das Serialport geschrieben 
     Serial.print(",");
     Serial.print(temp_celsius);
     Serial.print(",");
@@ -115,18 +120,18 @@ void loop() {                  //Loop schleife, hier wird das Rollo gesteuert un
   
 }
 
-void rollo (int location){
-  Serial.print("Rollo function:");
-  Serial.print(Rollo.getStepsFenster());                                                     
+void rollo (int location){        //Rollo positions funktion. Hier wird berechnet wie viele Steps der Steppermotor fahren muss um die gewünschte Position zu erreichen 
+  //Serial.print("Rollo function:");      //Serial print für Debugging
+  //Serial.print(Rollo.getStepsFenster());                                                     
   int StepsFenster =  Rollo.getStepsFenster();                                               
-  int locationinsteps=(StepsFenster * (100/location));
+  int locationinsteps=(StepsFenster * (100/location));  //Umrechnung auf steps... 
   int pos=Rollo.getPositionInSteps();
   
-  if (locationinsteps>pos)
+  if (locationinsteps>pos)      //if loop ob er runter oder hoch fahren muss
   {
-    runter = true;
-    stepper.moveTo (runter, locationinsteps);
-    int nStep = stepper.getStepsLeft();
+    runter = true;      //hier fährt er runter
+    stepper.moveTo (runter, locationinsteps);       //Stepper Befehl 
+    /*int nStep = stepper.getStepsLeft();           //Gets steps left das man positions status zum GUI schicken kann. Noch nicht funktionsfähig.
     nStep=nStep/Rollo.getStepsFenster();
     while(stepper.getStepsLeft() != 0)
         {  
@@ -134,15 +139,16 @@ void rollo (int location){
     Serial.print(nStep);
     Serial.print("\n");
         }
+        */
     Rollo.SetPositionInSteps(locationinsteps);
     }
  
   
   else if (locationinsteps<pos)
   {
-    runter = false;
+    runter = false;       //hier fährt er hoch
     stepper.moveTo (runter, locationinsteps);
-        int nStep = stepper.getStepsLeft();
+    /*int nStep = stepper.getStepsLeft();
     nStep=nStep/Rollo.getStepsFenster();
     while(stepper.getStepsLeft() != 0)
         {  
@@ -150,6 +156,7 @@ void rollo (int location){
     Serial.print(nStep);
     Serial.print("\n");
         }
+        */
     Rollo.SetPositionInSteps(locationinsteps);
   }
   else
