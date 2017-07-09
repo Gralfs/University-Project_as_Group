@@ -11,20 +11,20 @@ void testValidSerialInput() {
   bool testResult = true;
 
   SerialInput parsedResult;
-  bool result = Widget::parseSerialInput("1100110", &parsedResult);
+  bool result = Widget::parseSerialInput("658|23", &parsedResult);
 
   if (result == false) {
     APITest::printComment("Das Ergebnis sollte 'true' sein.");
     testResult = false;
   }
 
-  if (parsedResult.licht != "100") {
-    APITest::printComment("Der Lichtwert sollte '100' sein, stattdessen: " + parsedResult.licht);
+  if (parsedResult.licht != "658") {
+    APITest::printComment("Der Lichtwert sollte '658' sein, stattdessen: " + parsedResult.licht);
     testResult = false;
   }
 
-  if (parsedResult.temp != "100") {
-    APITest::printComment("Der Temperaturwert sollte '100' sein, stattdessen: " + parsedResult.temp);
+  if (parsedResult.temp != "23") {
+    APITest::printComment("Der Temperaturwert sollte '23' sein, stattdessen: " + parsedResult.temp);
     testResult = false;
   }
 
