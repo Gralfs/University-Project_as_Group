@@ -8,10 +8,7 @@
 
 
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Widget)
-{
+Widget::Widget(ArduinoReader *reader, QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
     ui->setupUi(this);
 
     setStyleSheet("");                          //sets Buttons and Slider to Disabled for atumatic usage
@@ -21,57 +18,17 @@ Widget::Widget(QWidget *parent) :
     ui->pushButton_5->setEnabled(false);
     ui->verticalSlider->setEnabled(false);
 
-    arduino = new QSerialPort(this);
-    serialBuffer = "";
-    parsed_data = "";
-
-    bool arduino_is_available = false;
-
-    QString arduino_mega_port_name;
-    foreach(const QSerialPortInfo &serialPortInfo, QSerialPortInfo::availablePorts()){
-        if(serialPortInfo.hasProductIdentifier() && serialPortInfo.hasVendorIdentifier()){
-            if((serialPortInfo.productIdentifier() == arduino_mega_product_id)
-                    && (serialPortInfo.vendorIdentifier() == arduino_mega_vendor_id)){
-                arduino_is_available = true;
-                arduino_mega_port_name = serialPortInfo.portName();
-            }
-        }
-    }
-    if(arduino_is_available){
-        qDebug() << "Found the Arduino port...\n";
-        arduino->setPortName(arduino_mega_port_name);
-        arduino->open(QSerialPort::ReadWrite);
-        arduino->setBaudRate(QSerialPort::Baud9600);
-        arduino->setDataBits(QSerialPort::Data8);
-        arduino->setFlowControl(QSerialPort::NoFlowControl);
-        arduino->setParity(QSerialPort::NoParity);
-        arduino->setStopBits(QSerialPort::OneStop);
-        QObject::connect(arduino, SIGNAL(readyRead()), this, SLOT(readSerial()));
-        arduino->clear();
-        qDebug() << arduino->isOpen()<<endl;
-    }else{
-        qDebug() << "Couldn't find the Arduino\n";
-    }
+    // connect to the arduino reader
+    QObject::connect(reader, SIGNAL(newBlock(SerialInput)), this, SLOT(updateUILabels(SerialInput)));
 }
 
-Widget::~Widget()
-{
-    if(arduino->isOpen()){
-        arduino->close();
-    }
+Widget::~Widget() {
     delete ui;
 }
 
-// read data from the serial port
-void Widget::readSerial()
-{
-    this->parser.addInputString(this->arduino->readAll());
-
-    if (this->parser.getData().length() > 0) {
-        SerialInput lastBlock = this->parser.getData().last();
-        ui->label_3->setText(lastBlock.licht);
-        ui->label_6->setText(lastBlock.temp);
-    }
+void Widget::updateUILabels(SerialInput newBlock) {
+    this->ui->label_6->setText(newBlock.temp);
+    this->ui->label_3->setText(newBlock.licht);
 }
 
 

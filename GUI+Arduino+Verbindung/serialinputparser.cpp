@@ -20,12 +20,16 @@ SerialInput SerialInputParser::parseInputBlock(QString inputBlock) {
 }
 
 // Nimmt neuen arduino-input und sucht nach vollständigen Blöcken.
-void SerialInputParser::addInputString(QString input) {
+bool SerialInputParser::addInputString(QString input) {
+    bool newBlock = false;
+
     // add new input to the buffer
     this->buffer += input;
 
     // check, whether there is a complete block
     while(this->buffer.indexOf('|') != -1) {
+        newBlock = true;
+
         // extract block
         int pos = this->buffer.indexOf('|');
         QString block = this->buffer.left(pos);
@@ -35,6 +39,8 @@ void SerialInputParser::addInputString(QString input) {
         SerialInput parsedBlock = this->parseInputBlock(block);
         this->data.append(parsedBlock);
     }
+
+    return newBlock;
 }
 
 void SerialInputParser::clearData() {

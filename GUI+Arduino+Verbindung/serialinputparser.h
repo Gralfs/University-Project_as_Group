@@ -32,7 +32,7 @@ public:
     SerialInputParser();
 
     void clearData();
-    void addInputString(QString input);
+    bool addInputString(QString input);
     QList<SerialInput> getData() { return this->data; }
 };
 
