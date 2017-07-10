@@ -89,6 +89,8 @@ void Widget::on_verticalSlider_sliderReleased()                  //writting of s
 {
     int state = ui->verticalSlider->value();
     state = state + 1;
+//    slidertest(state);
+                                //Tests if the Slider Value is between 1-100 for the motor
     //Haven't been able to send action to arduino
 }
 
@@ -98,4 +100,24 @@ void Widget::on_verticalSlider_valueChanged(int state)            //Display of S
     QString pos = QString::number(posi);
     ui->label_2->setText(pos);
 
+}
+
+int Widget::slidertest(int state)
+{
+    qDebug() << "SliderTest\n";
+    qDebug() << "von Patrick Stadler\n";
+    qDebug() << "Test guckt, ob der Sliderwert zwischen 1-100 liegt.\n";
+    qDebug() << "widget.cpp\n";
+    if (0<state){
+        if (state<101){
+            qDebug() << "Test erfolgreich\n";
+        }
+        else{
+            qDebug() << "Test fehlgeschlagen\n";
+        }
+    }
+    else{
+        qDebug() << "Test fehlgeschlagen\n";
+    }
+    return 0;
 }

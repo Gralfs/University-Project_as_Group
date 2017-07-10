@@ -25,6 +25,8 @@ public:
     explicit Widget(ArduinoReader *reader, QWidget *parent = 0);
     ~Widget();
 
+    int slidertest(int state);
+
 public slots:
     void updateUILabels(SerialInput newBlock);
 
