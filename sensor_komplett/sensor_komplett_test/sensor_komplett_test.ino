@@ -21,11 +21,10 @@ int Fotowerte [60];
 int sum_f;  //Lichtwerte addiert pro Minute
 int mittelwert_f; 
 
-int j;
-boolean sensorwerteausgabe=false;
+
 void setup() {
 
-RUNTEST
+
   // put your setup code here, to run once:
 Serial.begin(9600); //Übertragung Serielle Schnittstelle
  pinMode(12, OUTPUT); // Pin 12 ist ein Ausgang. Zuständig für die Temperatur
@@ -37,9 +36,9 @@ void loop() {
  
   // put your main code here, to run repeatedly:
 //Schleife für Mittelwertsberechnung
-for (j=1; j<2; j++){
-  sum_t=0;
 
+  sum_t=0;
+  sum_f=0;
   //Schleife für Sensoren
 for (i=0; i<60; i++){
 
@@ -50,9 +49,6 @@ for (i=0; i<60; i++){
 
     foto_sensor =analogRead(eingang);
 
-    Serial.print("Sensorwert = " ); 
-    Serial.println(foto_sensor);
-   
     
     
     delay(t);
@@ -64,8 +60,7 @@ for (i=0; i<60; i++){
   sum_t=sum_t+Temperaturwerte[i]; 
   sum_f=sum_f+Fotowerte[i];
 
-  if (sum_f>0){
-    sensorwerteausgabe=true;}
+
   
   }
   //Mittelwertberechnung
@@ -80,6 +75,6 @@ mittelwert_f=sum_f/60;
             Serial.print("Licht:"); 
            Serial.print(mittelwert_f); 
          Serial.println(",");
-}
+RUNTEST
 
 }

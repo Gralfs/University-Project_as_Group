@@ -5,15 +5,17 @@
 
 #include "test.h"
 
-extern boolean sensorwerteausgabe;
+extern int mittelwert_f;
+
 
 void testAnmeldung(){ // Name frei waehlbar
-  bool testResult = false;
+  bool testResult=false ;
 
   // Eigene Testimplementierung...
 
-  if(sensorwerteausgabe==true)
+  if(mittelwert_f>0)
 {testResult = true;}
+else {testResult = false;}
   // testResult kann bei einem erfolgreichen Test 
   // auf true gesetzt werden
   
@@ -24,7 +26,6 @@ void testAnmeldung(){ // Name frei waehlbar
 
 void runTests(){
   APITest::printTestStartHeader(); // Nicht modifizieren
-  
   
 
 
