@@ -30,7 +30,7 @@ Serial.begin(9600); //Übertragung Serielle Schnittstelle
 void loop() {
   // put your main code here, to run repeatedly:
 //Schleife für Mittelwertsberechnung
-for (j=1; j<2; j++){
+
   sum_t=0;
 
   //Schleife für Sensoren
@@ -43,10 +43,7 @@ for (i=0; i<60; i++){
 
     foto_sensor =analogRead(eingang);
 
-    Serial.print("Sensorwert = " ); 
-    Serial.println(foto_sensor);
-   
-    
+     
     
     delay(t);
 
@@ -70,6 +67,6 @@ mittelwert_f=sum_f/60;
             Serial.print("Licht:"); 
            Serial.print(mittelwert_f); 
          Serial.println(",");
-}
+
 
 }
