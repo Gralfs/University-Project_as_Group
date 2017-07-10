@@ -1,6 +1,6 @@
 #define TEST
-#include "testDefinitionen.h"
-
+#include "testLicht.h"
+#include "testTemperatur.h"
 
 
 //Temperatur
@@ -76,5 +76,5 @@ mittelwert_f=sum_f/60;
            Serial.print(mittelwert_f); 
          Serial.println(",");
 RUNTEST
-
+RUNTEST
 }
