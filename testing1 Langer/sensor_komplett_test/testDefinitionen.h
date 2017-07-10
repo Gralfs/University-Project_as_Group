@@ -12,7 +12,8 @@ void testAnmeldung(){ // Name frei waehlbar
 
   // Eigene Testimplementierung...
 
-
+if(sensorwerteausgabe==true)
+{testResult = true;}
   // testResult kann bei einem erfolgreichen Test 
   // auf true gesetzt werden
   
