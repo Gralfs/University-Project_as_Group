@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 4.2.1, 2017-07-09T13:13:00. -->
-=======
-<!-- Written by QtCreator 4.2.1, 2017-07-09T15:19:53. -->
->>>>>>> ebb7d1694ffc6658c8fc25f0a9c4d978f7839012
+<!-- Written by QtCreator 4.2.1, 2017-07-10T12:46:21. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -308,21 +304,13 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">API_GUI</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
-<<<<<<< HEAD
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/patrick/TestRepo/projektarbeit-GroupyMcGroupface/GUI+Arduino+Verbindung/API_GUI.pro</value>
-=======
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/Users/Michael/Desktop/Projekt API/projektarbeit-GroupyMcGroupface/GUI+Arduino+Verbindung/API_GUI.pro</value>
->>>>>>> ebb7d1694ffc6658c8fc25f0a9c4d978f7839012
     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">API_GUI.pro</value>
     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
-<<<<<<< HEAD
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/home/patrick/TestRepo/projektarbeit-GroupyMcGroupface/build-API_GUI-Desktop_Qt_5_8_0_GCC_64bit-Debug</value>
-=======
-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/Users/Michael/Desktop/Projekt API/projektarbeit-GroupyMcGroupface/build-API_GUI-Desktop_Qt_5_8_0_clang_64bit-Debug/API.app/Contents/MacOS</value>
->>>>>>> ebb7d1694ffc6658c8fc25f0a9c4d978f7839012
+    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default"></value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

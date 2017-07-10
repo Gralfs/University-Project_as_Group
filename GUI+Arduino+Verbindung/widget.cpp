@@ -90,7 +90,8 @@ void Widget::on_verticalSlider_sliderReleased()                  //writting of s
 {
     int state = ui->verticalSlider->value();
     state = state + 1;
-    slidertest(state);
+//    slidertest(state);
+                            //Tests if the Slider Value is between 1-100 for the motor
             //Haven't been able to send action to arduino
 }
 
