@@ -8,10 +8,7 @@
 
 
 
-Widget::Widget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Widget)
-{
+Widget::Widget(ArduinoReader *reader, QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
     ui->setupUi(this);
 
     setStyleSheet("");                          //sets Buttons and Slider to Disabled for atumatic usage
@@ -21,86 +18,18 @@ Widget::Widget(QWidget *parent) :
     ui->pushButton_5->setEnabled(false);
     ui->verticalSlider->setEnabled(false);
 
-    arduino = new QSerialPort(this);
-    serialBuffer = "";
-    parsed_data = "";
-
-    bool arduino_is_available = false;
-
-    QString arduino_mega_port_name;
-    foreach(const QSerialPortInfo &serialPortInfo, QSerialPortInfo::availablePorts()){
-        if(serialPortInfo.hasProductIdentifier() && serialPortInfo.hasVendorIdentifier()){
-            if((serialPortInfo.productIdentifier() == arduino_mega_product_id)
-                    && (serialPortInfo.vendorIdentifier() == arduino_mega_vendor_id)){
-                arduino_is_available = true;
-                arduino_mega_port_name = serialPortInfo.portName();
-            }
-        }
-    }
-    if(arduino_is_available){
-        qDebug() << "Found the Arduino port...\n";
-        arduino->setPortName(arduino_mega_port_name);
-        arduino->open(QSerialPort::ReadWrite);
-        arduino->setBaudRate(QSerialPort::Baud9600);
-        arduino->setDataBits(QSerialPort::Data8);
-        arduino->setFlowControl(QSerialPort::NoFlowControl);
-        arduino->setParity(QSerialPort::NoParity);
-        arduino->setStopBits(QSerialPort::OneStop);
-        QObject::connect(arduino, SIGNAL(readyRead()), this, SLOT(readSerial()));
-        qDebug() << arduino->isOpen()<<endl;
-    }else{
-        qDebug() << "Couldn't find the Arduino\n";
-    }
+    // connect to the arduino reader
+    QObject::connect(reader, SIGNAL(newBlock(SerialInput)), this, SLOT(updateUILabels(SerialInput)));
 }
 
-Widget::~Widget()
-{
-    if(arduino->isOpen()){
-        arduino->close();
-    }
+Widget::~Widget() {
     delete ui;
 }
 
-// parse serial input
-bool Widget::parseSerialInput(QString inputString, SerialInput* result) {
-    // check, whether there is any input
-    QStringList bufferSplit = inputString.split('|');
 
-    // return false when there is no data
-    if (bufferSplit.length() < 2) {
-        return false;
-    }
-
-    // parse light
-    result->licht = bufferSplit.at(0);
-    //result->licht = result->licht.remove(0, result->licht.indexOf(",") + 1);
-
-    // parse temp
-    result->temp = bufferSplit.at(1);
-    //result->temp = result->temp.remove(result->temp.indexOf(","), 100);
-
-    return true;
-}
-
-// read data from the serial port
-void Widget::readSerial()
-{
-    // this will hold the parsed result.
-    SerialInput result;
-
-    if (Widget::parseSerialInput(serialBuffer, &result)) {
-        // update ui with new data
-        ui->label_3->setText(result.licht);
-        ui->label_6->setText(result.temp);
-
-        // reset serial buffer
-        serialBuffer = "";
-        serialData.clear();
-    } else {
-        // update data
-        serialData = arduino->readAll();
-        serialBuffer += QString::fromStdString(serialData.toStdString());
-    }
+void Widget::updateUILabels(SerialInput newBlock) {
+    this->ui->label_6->setText(newBlock.temp);
+    this->ui->label_3->setText(newBlock.licht);
 }
 
 
@@ -161,7 +90,8 @@ void Widget::on_verticalSlider_sliderReleased()                  //writting of s
 {
     int state = ui->verticalSlider->value();
     state = state + 1;
-    //Haven't been able to send action to arduino
+    slidertest(state);
+            //Haven't been able to send action to arduino
 }
 
 void Widget::on_verticalSlider_valueChanged(int state)            //Display of Sliderposition on label
@@ -170,4 +100,19 @@ void Widget::on_verticalSlider_valueChanged(int state)            //Display of S
     QString pos = QString::number(posi);
     ui->label_2->setText(pos);
 
+}
+
+int Widget::slidertest(int state)
+{
+    qDebug() << "SliderTest\n";
+    qDebug() << "von Patrick Stadler\n";
+    qDebug() << "Test guckt, ob der Sliderwert zwischen 1-100 liegt.\n";
+    qDebug() << "widget.cpp\n";
+    if (0<state<101){
+        qDebug() << "Test erfolgreich";
+    }
+    else{
+        qDebug() << "Test fehlgeschlagen";
+    }
+    return 0;
 }
