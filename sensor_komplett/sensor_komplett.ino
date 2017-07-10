@@ -16,7 +16,7 @@ int Fotowerte [60];
 int sum_f;  //Lichtwerte addiert pro Minute
 int mittelwert_f; 
 
-int j;
+
 
 
 void setup() {
@@ -32,7 +32,8 @@ void loop() {
 //Schleife für Mittelwertsberechnung
 
   sum_t=0;
-
+  sum_f=0;
+  
   //Schleife für Sensoren
 for (i=0; i<60; i++){
 
