@@ -39,3 +39,5 @@ HEADERS  += widget.h \
     graph.h
 
 FORMS    += widget.ui
+
+
