@@ -17,8 +17,8 @@ void testAnmeldung(){ // Name frei waehlbar
   // testResult kann bei einem erfolgreichen Test 
   // auf true gesetzt werden
   
-  APITest::printTestResult(testResult, "Anmeldung", "Paul Frost",
-  "Anmeldung der Studierenden Prototyp A02", "testDefinitionen.h");
+  APITest::printTestResult(testResult, "Sensorwerte", "Jan-Niklas Langer",
+  "Licht- und Temperaturwerte werden ausgegeben A03 A04", "testDefinitionen.h");
 }
 
 
