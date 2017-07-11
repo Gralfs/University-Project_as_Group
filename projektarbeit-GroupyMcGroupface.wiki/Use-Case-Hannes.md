@@ -1,1 +1,0 @@
-![Bild kann nicht angezeigt werden](images/UseCaseDiagramHMaibach.png)!
