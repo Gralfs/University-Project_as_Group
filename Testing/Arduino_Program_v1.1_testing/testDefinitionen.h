@@ -5,7 +5,7 @@
 
 #include "test.h"
 
-
+boolean intialisierungerfolgreich;
 
 void testAnmeldung(){ 
   bool testResult = false;

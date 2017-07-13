@@ -1,7 +1,6 @@
 #include <CheapStepper.h>
 #define TEST
 #include "testDefinitionen.h"
-#include "registration.h"
 
 CheapStepper stepper (8,9,10,11);
 
@@ -59,6 +58,7 @@ void rollo (int location);     //Funktiondefinition für das ändern der Rollo p
 Arduino Rollo;                  //Rollo als Arduino definiert 
 
 int initialise () {  //Hier wird das Rollo intialisiert 
+ RUNTEST
   boolean intialisierungerfolgreich = false;
   while (digitalRead(4)!=LOW)       //Das Rollo fährt einmal bis ganz nach Unten bis er zum unterem Kontakt kommt
     {
@@ -95,6 +95,7 @@ void setup() { //Setup beim starten vom Arduino
 }
 
 void loop() {                  //Loop schleife, hier wird das Rollo gesteuert und die Sensorwerte ausgegeben
+    RUNTEST
     if (Serial.available() > 0){   //Wenn ein Serial zugang da ist wird integer location desen wert gleich gesätzt
     if(0 <= Serial.read() <= 100) {     //If loop das das Rollo nicht sich kaputt fährt
     int location = Serial.read();
