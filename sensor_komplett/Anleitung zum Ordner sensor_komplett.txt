@@ -1,0 +1,23 @@
+Dieser Ordner und die beinhalteten Programme wurden von mir (Jan-Niklas Langer) erstellt und bearbeitet.
+Er bearbeitet die Anforderungen A03 und A04.
+
+Zunächst habe ich mit dem Aufbau und dem Code für den einzelnen Lichtsensor begonnen.
+Dabei habe ich mich bei dem Aufbau und der grundsätzlichen Programmierung an https://funduino.de/nr-6-fotowiderstand  gehalten. 
+Die zugehörige Datei zum Fotosensor einzelnd lässt sich im Ordner "Temperatursensor einzelnd" finden.
+
+Daraufhin habe ich mich mit dem Temperatursensor einzelnd beschäftig. 
+Aufbau und anfänglichen Code habe ich von der Seite:
+https://funduino.de/nr-9-temperatur-messen
+Die Datei zum Temperatursensor lässt sich unter "Lichtsensor einzelnd"
+
+Die Zusammenführung der Sensorprogrammen zu einem Programm findet in der Datei "sensor_komplett.ino" statt.
+Ebenso erfolgt in ihr die Mittelwertberechnung für beide Sensoren, die ich aber bereits in der Datei Tempsensor.ino in ihrer ersten Form realisiert habe.
+
+Bei der "sensor_komplett_test.ino" Datei ist zu beachten, dass jeweils eine der beiden Testdefinitiobnen am Anfang ausgeklammert werden muss:
+#include "testLicht.h"
+
+#include "testTemperatur.h"
+
+Ich konnte nicht beide Definitionen gleichzeitig laufen lasse, da es dann Probleme bei den übergegebenen Variablen und deren Darstellung gab.
+
+Am Ende habe ich dann die Datei sensor_komplett.ino mit in unsere gemeinsame Datei zum Arduino implementiert.
