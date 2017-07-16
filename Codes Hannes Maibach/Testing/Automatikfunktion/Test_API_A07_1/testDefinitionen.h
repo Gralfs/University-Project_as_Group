@@ -9,12 +9,12 @@ extern int location;
 extern int licht;
 extern int temp;
 
-void testAnmeldung(){ // Name frei waehlbar
+void testAutomatikfunktion(){  // Test: Auslösen des Rollos aufgrund des Umweltszenarios "Sommer"
   bool testResult=false ;
 
-licht=900;  // Eigene Testimplementierung...
+licht=900;            //Licht und Temperaturwert der Sensoren soll testweise im Bereich des Szenarios "Sommer" liegen
 temp=30;
-  if(location==100)
+  if(location==100)     //Test ist Erfolgreich, wenn das Rollo runtergefahren wird, sprich: wenn die Rolloposition auf 100 gesetzt wird
 {testResult = true;
 Serial.print("location:");
 Serial.print(location);}
@@ -34,7 +34,7 @@ void runTests(){
 
 
   // Hier sollen die eigenen Tests hinzugefuegt werden
-  testAnmeldung();
+  testAutomatikfunktion();
 
   APITest::printTestEndFooter(); // Nicht modifizieren
 }
