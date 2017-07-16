@@ -1,67 +1,75 @@
-int tempAnf = 1 ;//global, da Anfangswerte "tempAnf" bzw. "lichtAnf" nicht immer wieder 1 gesetzt werden soll
+//DEKLARATIONEN
+//Variablen
+int tempAnf = 1 ;//Variablen tempAnf, lichtAnf auf 1 gesetzt als Anfangswerte für die if-Bedingung in der loop-Schleife
 int lichtAnf = 1 ;
-int temp;
-int licht;
-temp = mittelwert_t; //optional: neuer Variablenname
-licht = mittelwert_f; //optional: neuer Variablenname
 
-void saveE(int tempAnf, int lichtAnf,int temp,int licht);//Funktionsprototypen
+int temp;//die von den Sensoren übergebenen Werte initialisieren 2 neue Variablen zur einfachen Handhabung in den Funktionen und Schleifen
+int licht;
+temp = mittelwert_t;//Anm.:mittwelwert_t ist der in Schleife ausgegebene Mittelwert der Temperatur
+licht = mittelwert_f;//Anm.:mittelwert_f ist der in Schleife ausgegebene Mittelwert des Lichts
+
+//Funktionsprototypen
+void saveE(int tempAnf, int lichtAnf,int temp,int licht);
 void Vergleichsfkt(double temp, double licht);
 int go_down ();
 int go_up ();
 
-
+//IM HAUPTPROGRAMM:
 
 void setup ()
 
 void loop() 
 {
-  // put your main code here, to run repeatedly:
-  saveE(tempAnf, lichtAnf, temp, licht); //Funktionsaufruf von saveE (und Vergleichsfunktion(und go_up/go_down))   
+  
+  saveR(tempAnf, lichtAnf, temp, licht);                     //Auslösen des Schleifenkonstruktes zum Vergleich der Sensorwerte mit den Richtwerten der Umweltszenarien   
 }
 
-void saveE(int tempAnf, int lichtAnf,int temp,int licht) //Funktion zum Sparen der Ressourcen
-    {
-      if (temp != tempAnf || licht != lichtAnf)  // Nur wenn sich ein Wert ändert, wird die Vergleichsfunktion aufgerufen.
+
+//FUNKTIONSDEFINITIONEN
+
+void saveR(int tempAnf, int lichtAnf,int temp,int licht)   //Funktion zum Sparen der Ressourcen (läuft in Schleife)
+    {                                                       // Nur wenn sich ein Wert ändert, d.h. ungleich dem Anfangswert ist, wird die Vergleichsfunktion geändert und ggf. die Rolloposition geändert
+      if (temp != tempAnf || licht != lichtAnf)         
       {
-        tempAnf=temp;   //geänderte Sensorwerte bilden neue Anfangswerte
+        tempAnf=temp;                                       //die geänderten Sensorwerte bilden die neue Anfangswerte der Funktion
         lichtAnf=licht;   
-        Vergleichsfkt(temp,licht);
+        Vergleichsfkt(temp,licht);                
       }
     }
 
-void Vergleichsfkt(double temp, double licht)  //Funktion zum Abgleich der Sensorwerte mit Richtwerten und Auslösen des Motors,evtl + 4.Bedingung
+void Vergleichsfkt(double temp, double licht)      //Funktion zum Abgleich der Sensorwerte mit Richtwerten und Auslösen des Motors (automatisierte Rollosteuerung)
 {
-  if (temp>=25 && licht>=800)
+  if (temp>=25 && licht>=800)                    //Abfragen, ob Umweltszenario "Sommer" vorliegt, also hohe Temperatur und hohe Lichtintensität
     {
-       go_down();
+       go_down();                               //wenn ja, Rollo ganz runter fahren
     }
-  else if (licht<=200)
+  else if (licht<=200)                          //Abfragen, ob Umweltszenario "Nacht" vorliegt, also sehr geringe Lichtintensität
     {
-      go_down();
+      go_down();                                //wenn ja, Rollo ganz runter fahren
     }
-  else
+  else                                          //Abfragen, ob Umweltszenario "bedeckter Tag" vorliegt, also mittlere Lichtwerte
     {
-      go_up();
+      go_up();                                  //wenn ja, Rollo ganz nach oben fahren
     }
 }
 
 
-int go_down ()  //Funktion gibt Signal/Wert zum Motorauslösen und Rollo runterfahren, ggf. Position halten
+int go_down ()                  //Funktion gibt Signal/Wert zum Motorauslösen und damit zum Rollo runterfahren. Ggf. Position halten, falls die Position schon erreicht ist.
 {
-  location = 100; //100 bzw. Wert des untersten steps
-  return location;  //weitergabe über Serial.print??
+  location = 100;              //Rolloposition auf 100  setzen bzw. den Wert des untersten "steps" des Motors
+  return location;             //Weitergabe der Rolloposition an nächste Funktion ermöglicht
 }
 
 
-int go_up ()   //Funktion gibt Signal/Wert zum Motorauslösen und Rollo hochfahren, ggf. Position halten
+int go_up ()                      //Funktion gibt Signal/Wert zum Motorauslösen und Rollo hochfahren. Ggf. Position halten, falls die Position schon erreicht ist.
 {
-  delay(300000);
-  if ((200<licht<800) || (temp<25 && licht>800))
+  delay(300000);                   //Funktionsablauf pausiert kurz, falls nur eine irreguläre Störung vorliegt (z.B Fliege sitzt auf dem Lichtsensor)
+                              
+  if ((200<licht<800) || (temp<25 && licht>800)) // erneute Prüfung, ob sich die Sensorwerte weiterhin im Bereich des vorher angenommenen Szenario "bedeckter Tag" befinden
     {
-      location=0; //0 bzw. Wert des obersten steps 
+      location=0;                 //Rolloposition auf 0 setzen bzw. den Wert des obersten "steps" des Motors 
     }
-  return location; //weitergabe über Serial.print??
+  return location;                //Weitergabe der Rolloposition an nächste Funktion ermöglicht
 }
 
 
